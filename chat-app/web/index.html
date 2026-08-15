@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat White Vendas</title>
+<style>
+  body { font-family: system-ui, sans-serif; background:#0f172a; color:#e2e8f0; max-width:640px; margin:0 auto; padding:16px; }
+  h1 { color:#fbbf24; font-size:20px; }
+  #msg { background:#1e293b; border:1px solid #334155; border-radius:12px; padding:10px; height:55vh; overflow-y:auto; margin:12px 0; }
+  .m { margin:6px 0; }
+  .u { color:#38bdf8; font-weight:bold; }
+  .t { color:#94a3b8; font-size:12px; }
+  input, button { padding:10px; border-radius:8px; border:1px solid #334155; background:#1e293b; color:#e2e8f0; margin:4px 2px; }
+  button { background:#fbbf24; color:#0f172a; font-weight:bold; cursor:pointer; }
+</style>
+</head>
+<body>
+<h1>💬 Chat White Vendas</h1>
+<div>
+  <input id="nome" placeholder="Seu nome" value="Visitante" style="width:40%">
+  <input id="sala" placeholder="Sala (ex.: geral)" value="geral" style="width:40%">
+</div>
+<div id="msg"></div>
+<div>
+  <input id="texto" placeholder="Escreva sua mensagem..." style="width:72%" onkeydown="if(event.key==='Enter')enviar()">
+  <button onclick="enviar()">Enviar</button>
+</div>
+<script>
+const msg = document.getElementById('msg');
+let ultimo = 0;
+function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+async function enviar(){
+  const t = document.getElementById('texto').value.trim();
+  if(!t) return;
+  await fetch('/send', {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({room: sala(), user: nome(), text: t})});
+  document.getElementById('texto').value='';
+}
+function nome(){ return document.getElementById('nome').value || 'Visitante'; }
+function sala(){ return document.getElementById('sala').value || 'geral'; }
+async function atualizar(){
+  try{
+    const r = await fetch('/messages?room='+encodeURIComponent(sala())+'&after='+ultimo);
+    const lista = await r.json();
+    for(const m of lista){
+      const d = document.createElement('div'); d.className='m';
+      d.innerHTML = '<span class="u">'+esc(m.user)+'</span> <span class="t">'+esc(m.ts)+'</span><br>'+esc(m.text);
+      msg.appendChild(d); ultimo = Math.max(ultimo, m.id);
+    }
+    msg.scrollTop = msg.scrollHeight;
+  }catch(e){}
+}
+setInterval(atualizar, 1500);
+atualizar();
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <EditText android:id="@+id/nome" android:hint="Seu nome"
+        android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <EditText android:id="@+id/sala" android:hint="Sala (ex.: geral)"
+        android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <TextView android:id="@+id/historico"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:scrollbars="vertical" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText android:id="@+id/texto" android:hint="Mensagem..."
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+        <Button android:id="@+id/enviar" android:text="Enviar"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>
