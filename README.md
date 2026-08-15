@@ -39,6 +39,31 @@ python3 scanner_rede.py 192.168.0.1 22,80,443
 python3 senha_check.py 'MinhaSenha123!'
 ```
 
+---
+
+## 💬 White Chat — TikTok Edition (`chat-app/`)
+
+App social estilo TikTok: feed vertical de vídeos, lives, DMs, perfil e **painel admin** com moderação de posts.
+
+### Rodar (2 passos)
+```bash
+cd chat-app/web
+npm install
+npm run build          # gera o app em web/dist
+cd ../server
+python3 server.py 8000 # serve o app + API em http://IP:8000
+```
+
+### Telas
+- **App (usuário):** feed "Para Você" com scroll snap e curtir por duplo toque, Explorar (lives em grade 2 colunas + transmissão WebRTC), Chat (DMs com não-lidos), Perfil (avatar, contadores, editar/compartilhar) e botão `+` pra criar post (drag & drop, legenda, música, toggles).
+- **Admin:** entre em `http://IP:8000/admin` (ou `/#/admin`) — login `admin` / `admin123`. Dashboard com gráfico, Usuários (banir/deletar), Posts (aprovar/reprovar/fixar/excluir — posts novos entram como **Pendente** e só aparecem no feed após aprovação), Lives, Denúncias e Config do servidor.
+
+### APIs principais
+`/api/posts` (feed + criação com fila de moderação), `/api/posts/<id>/approve|reject|pin|delete|like`, `/api/lives`, `/api/dm`, `/api/conversas`, `/api/reports`, `/api/admin/login`, `/api/users`, `/api/config`.
+
+### App Android (Kotlin, Android 12-14)
+Projeto em `chat-app/android/` — compile no Android Studio ou use o APK da Release `chat-app-v1.0` no GitHub. A URL do servidor é configurável dentro do app.
+
 ## Bot
 ```bash
 export BOT_TOKEN="token_do_seu_bot"

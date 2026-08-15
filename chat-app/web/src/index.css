@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { -webkit-tap-highlight-color: transparent; }
+html, body { background: #000; color: #fff; font-family: 'Inter', system-ui, sans-serif; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.snap-feed { scroll-snap-type: y mandatory; -webkit-overflow-scrolling: touch; }
+.snap-item { scroll-snap-align: start; scroll-snap-stop: always; }
+
+.glitch { position: relative; animation: glitchShift 3s infinite steps(1); }
+@keyframes glitchShift {
+  0%, 92%, 100% { transform: translate(0); }
+  93% { transform: translate(-3px, 2px); }
+  95% { transform: translate(3px, -2px); }
+  97% { transform: translate(-2px, 1px); }
+}
+.glitch::before, .glitch::after {
+  content: '+'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 32px; font-weight: 900; opacity: .9; pointer-events: none;
+}
+.glitch::before { color: #25F4EE; transform: translate(-2px, 0); mix-blend-mode: screen; }
+.glitch::after { color: #FE2C55; transform: translate(2px, 0); mix-blend-mode: screen; }
+
+.marquee { display: inline-block; white-space: nowrap; animation: scrollText 8s linear infinite; }
+@keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+.disc { animation: spin 4s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.pulse-live { animation: pulseLive 1.4s ease-in-out infinite; }
+@keyframes pulseLive { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+
+.bg-noise {
+  background-image: radial-gradient(circle at 20% 30%, rgba(254,44,85,.35), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(37,244,238,.30), transparent 45%);
+}
+
+.btn-base { @apply rounded-box font-bold transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none; }
+.input-dark { @apply w-full rounded-box bg-tinput border border-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-tpink/60 transition-colors; }
+.card-dark { @apply rounded-box bg-tcard border border-white/5; }

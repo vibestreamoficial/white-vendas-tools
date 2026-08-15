@@ -4,3 +4,13 @@ vendas.csv
 codes.json
 vip.json
 bot.log
+chat-app/web/node_modules/
+chat-app/web/uploads/
+chat-app/android/.gradle/
+chat-app/android/app/build/
+chat-app/server/posts.json
+chat-app/server/lives.json
+chat-app/server/dm.json
+chat-app/server/reports.json
+chat-app/server/config.json
+chat-app/server/users.json
