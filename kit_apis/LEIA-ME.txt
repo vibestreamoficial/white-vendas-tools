@@ -1,0 +1,35 @@
+============================================================
+ KIT DE APIS — USO EDUCACIONAL (contas próprias)
+ Telegram • Instagram • Facebook • Roblox
+============================================================
+
+✅ Regra: SOMENTE contas/páginas PRÓPRIAS. Sem checkdata, sem
+   consultar terceiros, sem spam. Respeite os termos de uso.
+
+1️⃣ TELEGRAM — telegram_bot_starter.py
+- Fale com @BotFather → /newbot → crie e copie o token
+- Rodar: python3 telegram_bot_starter.py SEU_TOKEN
+- Pode evoluir: tópicos, moderação, pagamentos, etc.
+
+2️⃣ INSTAGRAM — instagram_graph_api.py
+- Crie app em developers.facebook.com (tipo Business)
+- Adicione produto Instagram → faça login com a SUA conta
+- Gere token de usuário (permissões: instagram_basic, instagram_content_publish)
+- Rodar: IG_TOKEN=seu_token python3 instagram_graph_api.py me
+
+3️⃣ FACEBOOK — facebook_graph_api.py
+- Token: developers.facebook.com/tools/explorer (escolha sua página)
+- Id da página: a própria ferramenta mostra
+- Rodar: FB_TOKEN=seu_token FB_PAGE=id python3 facebook_graph_api.py post "msg"
+
+4️⃣ ROBLOX — roblox_open_cloud.py
+- API Key: create.roblox.com/dashboard/credentials
+- Crie chave com escopo users-api e universe-api (SEU usuário/jogo)
+- Rodar: RBX_KEY=suakey python3 roblox_open_cloud.py user SEU_ID
+
+📞 Suporte na instalação: @dohype1
+🌐 Código: github.com/vibestreamoficial/white-vendas-tools
+============================================================
+⚠️ APIs são ferramentas: uso ilegal (dados de terceiros, spam,
+   roubo de conta) é crime e não é coberto por este kit.
+============================================================
