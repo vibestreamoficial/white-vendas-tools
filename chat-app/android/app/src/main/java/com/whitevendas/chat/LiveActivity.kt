@@ -43,8 +43,8 @@ class LiveActivity : AppCompatActivity() {
         status = findViewById(R.id.lv_status)
         local = findViewById(R.id.lv_local)
         remoto = findViewById(R.id.lv_remoto)
-        local.init(EGLBase.createEglBase().eglBaseContext, null)
-        remoto.init(EGLBase.createEglBase().eglBaseContext, null)
+        local.init(EglBase.create().eglBaseContext, null)
+        remoto.init(EglBase.create().eglBaseContext, null)
         local.setMirror(true)
 
         findViewById<Button>(R.id.lv_transmitir).setOnClickListener { transmitir() }
@@ -79,7 +79,7 @@ class LiveActivity : AppCompatActivity() {
         return pcFactory!!
     }
 
-    private fun observer(callback: PeerConnection.Observer): PeerConnection.Observer = object : PeerConnection.Observer {
+    private fun observer(): PeerConnection.Observer = object : PeerConnection.Observer {
         override fun onIceCandidate(c: IceCandidate?) {
             try {
                 post("candidate", JSONObject().put("v", if (souStreamer) "S" else meuId)
@@ -87,12 +87,14 @@ class LiveActivity : AppCompatActivity() {
             } catch (_: Exception) {
             }
         }
+        override fun onSignalingChange(s: PeerConnection.SignalingState) {}
+        override fun onIceConnectionReceivingChange(receiving: Boolean) {}
+        override fun onIceCandidatesRemoved(candidates: Array<IceCandidate>) {}
         override fun onAddStream(s: MediaStream?) {}
         override fun onRemoveStream(s: MediaStream?) {}
         override fun onRenegotiationNeeded() {}
         override fun onIceConnectionChange(s: PeerConnection.IceConnectionState?) {}
         override fun onIceGatheringChange(s: PeerConnection.IceGatheringState?) {}
-        override fun onSignalingChange(s: PeerConnection.SignalingState?) {}
         override fun onDataChannel(d: DataChannel?) {}
         override fun onAddTrack(r: RtpReceiver?, streams: Array<out MediaStream>?) {
             r?.track()?.let { t ->
@@ -103,7 +105,7 @@ class LiveActivity : AppCompatActivity() {
 
     private fun novoPc(): PeerConnection {
         val config = PeerConnection.RTCConfiguration(listOf(PeerConnection.IceServer("stun:stun.l.google.com:19302")))
-        return factory().createPeerConnection(config, observer(object : PeerConnection.Observer {}))!!
+        return factory().createPeerConnection(config, observer())!!
     }
 
     private fun post(tipo: String, payload: JSONObject) {
@@ -130,7 +132,7 @@ class LiveActivity : AppCompatActivity() {
             val nomeCam = enums.deviceNames.firstOrNull { enums.isFrontFacing(it) } ?: enums.deviceNames.firstOrNull()
             if (nomeCam == null) { setStatus("Sem câmera disponível."); return }
             capturer = enums.createCapturer(nomeCam, null)
-            surfaceHelper = SurfaceTextureHelper.create("Cam", EGLBase.createEglBase().eglBaseContext)
+            surfaceHelper = SurfaceTextureHelper.create("Cam", EglBase.create().eglBaseContext)
             val videoSource = factory().createVideoSource(false)
             capturer?.initialize(surfaceHelper, this, videoSource.capturerObserver)
             capturer?.startCapture(640, 480, 30)
@@ -196,16 +198,15 @@ class LiveActivity : AppCompatActivity() {
     private fun criarOferta(viewer: String) {
         try {
             val p = pc ?: return
-            val offer = p.createOffer(MediaConstraints())
-            p.setLocalDescription(object : SdpObserver {
+            p.createOffer(object : SdpObserver {
                 override fun onCreateSuccess(desc: SessionDescription?) {
                     offerPendente = UUID.randomUUID().toString().substring(0, 8)
-                    post("offer", JSONObject().put("v", viewer).put("i", offerPendente).put("o", offer?.description))
+                    post("offer", JSONObject().put("v", viewer).put("i", offerPendente).put("o", desc?.description))
                 }
                 override fun onSetSuccess() {}
                 override fun onSetFailure(reason: String?) {}
                 override fun onCreateFailure(reason: String?) {}
-            }, offer)
+            }, MediaConstraints())
         } catch (e: Exception) {
             ui { setStatus("❌ Erro na oferta: ${e.message}") }
         }
@@ -218,9 +219,15 @@ class LiveActivity : AppCompatActivity() {
                 override fun onCreateSuccess(desc: SessionDescription?) {}
                 override fun onSetSuccess() {
                     try {
-                        val answer = pc2.createAnswer(MediaConstraints())
-                        pc2.setLocalDescription(SdpObserverImpl(), answer)
-                        post("answer", JSONObject().put("i", p.optString("i")).put("o", answer.description))
+                        pc2.createAnswer(object : SdpObserver {
+                            override fun onCreateSuccess(desc: SessionDescription?) {
+                                pc2.setLocalDescription(SdpObserverImpl(), desc)
+                                post("answer", JSONObject().put("i", p.optString("i")).put("o", desc?.description))
+                            }
+                            override fun onSetSuccess() {}
+                            override fun onSetFailure(reason: String?) {}
+                            override fun onCreateFailure(reason: String?) {}
+                        }, MediaConstraints())
                     } catch (e: Exception) {
                         setStatus("Erro ao responder: ${e.message}")
                     }
