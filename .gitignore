@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+vendas.csv
+codes.json
+vip.json
+bot.log
