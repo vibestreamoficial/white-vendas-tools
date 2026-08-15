@@ -6,8 +6,12 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 object Http {
+    var serverOverride: String? = null
+
+    fun base(): String = serverOverride ?: Config.SERVER
+
     fun getArray(path: String): JSONArray {
-        val conn = URL(Config.SERVER + path).openConnection() as HttpURLConnection
+        val conn = URL(base() + path).openConnection() as HttpURLConnection
         conn.connectTimeout = 10000
         conn.readTimeout = 20000
         try {
@@ -19,7 +23,7 @@ object Http {
     }
 
     fun postJson(path: String, body: JSONObject): JSONObject {
-        val conn = URL(Config.SERVER + path).openConnection() as HttpURLConnection
+        val conn = URL(base() + path).openConnection() as HttpURLConnection
         conn.requestMethod = "POST"
         conn.setRequestProperty("Content-Type", "application/json")
         conn.doOutput = true

@@ -6,6 +6,11 @@
         android:text="💬 White Chat" android:textSize="28sp" android:textStyle="bold" />
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:text="perfil • chat • lives" android:textSize="14sp" android:layout_marginBottom="24dp" />
+    <EditText android:id="@+id/edt_servidor" android:hint="Servidor (ex: http://192.168.0.10:8000)"
+        android:inputType="textUri" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <Button android:id="@+id/btn_salvar_servidor" android:text="💾 Salvar servidor"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp" />
     <Button android:id="@+id/btn_perfil" android:text="👤 Meu Perfil"
         android:layout_width="match_parent" android:layout_height="wrap_content" />
     <Button android:id="@+id/btn_chat" android:text="💬 Chat"
