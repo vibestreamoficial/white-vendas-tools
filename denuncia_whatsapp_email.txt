@@ -1,0 +1,56 @@
+============================================================
+ DENÚNCIA WHATSAPP VIA E-MAIL — anti-golpe (100% legal)
+ Envie para o suporte oficial do WhatsApp quando você for
+ vítima de golpe, spam, ameaça ou conteúdo ilegal.
+ PROIBIDO usar contra pessoas inocentes (isso é crime).
+============================================================
+
+ONDE ENVIAR (canais oficiais do WhatsApp):
+- Formulário oficial de contato (recomendado):
+  https://www.whatsapp.com/contact/?subject=messenger
+- E-mail de abuso: abuse@whatsapp.com
+- E-mail de suporte: support@whatsapp.com
+- Se for urgente (ameaça): procure a polícia PRIMEIRO
+  e anexe o BO à denúncia.
+
+------------------------------------------------------------
+ MODELO DE E-MAIL (copie e preencha)
+------------------------------------------------------------
+To: abuse@whatsapp.com
+Subject: Report of abuse / fraud via WhatsApp number +55 (__) _____-____
+
+Dear WhatsApp Support Team,
+
+I am reporting a WhatsApp user for abuse and fraud.
+
+Number reported: +55 (__) _____-____
+Date of the incident: __/__/____
+
+Description:
+The user contacted me claiming [to sell a product / to be a
+relative / offering a prize] and requested a payment via PIX
+of R$ ______, providing the key [chave pix]. After receiving
+the payment, the user blocked me and stopped responding.
+
+I have attached screenshots of the conversation and payment
+receipts. This number is violating WhatsApp's Terms of
+Service and I request that the account be reviewed and
+blocked.
+
+My contact number (only for WhatsApp internal use):
++55 (__) _____-____
+
+Thank you.
+[Seu nome completo]
+------------------------------------------------------------
+
+DICAS:
+- Anexe SEMPRE: prints da conversa + comprovante de pagamento.
+- Reporte também pelo botão "Denunciar" dentro da conversa.
+- Faça Boletim de Ocorrência na delegacia eletrônica do seu
+  estado e, se houve PIX, peça o MED (devolução) ao banco em
+  até 24h.
+- O WhatsApp só bloqueia contas que violam os Termos de Uso.
+  Denúncia falsa contra pessoa inocente é crime (denunciação
+  caluniosa — art. 339 CP).
+============================================================
