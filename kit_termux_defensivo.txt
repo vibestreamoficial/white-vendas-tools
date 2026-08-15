@@ -1,0 +1,68 @@
+============================================================
+ KIT TERMUX DEFENSIVO — 20 comandos white hat
+ Uso: aprendizado e proteção dos SEUS dispositivos.
+============================================================
+
+1) Atualizar tudo:
+pkg update && pkg upgrade -y
+
+2) Instalar o básico:
+pkg install python git nano curl wget openssh
+
+3) Clonar o kit de ferramentas:
+git clone https://github.com/vibestreamoficial/white-vendas-tools
+
+4) Rodar o menu de ferramentas:
+cd white-vendas-tools && python3 cyber_kit.py
+
+5) Gerar senha forte (16 chars, 5 senhas):
+python3 gerador_senha.py 16 5
+
+6) Testar força de uma senha:
+python3 senha_check.py 'SuaSenha'
+
+7) Analisar link suspeito:
+python3 check_link.py 'https://link-suspeito.com'
+
+8) Escanear portas da SUA rede (edu):
+python3 scanner_rede.py 192.168.0.1 22,80,443,3389
+
+9) Ver IP público:
+curl ifconfig.me
+
+10) Ver IP local:
+ifconfig 2>/dev/null || ip addr
+
+11) Testar conectividade:
+ping -c 4 1.1.1.1
+
+12) Rotear conexão (SOCKS5):
+pkg install tor && tor
+
+13) DNS público seguro:
+termux-setup-storage && pkg install resolv-conf
+
+14) Ver processos rodando:
+ps aux | head -30
+
+15) Ver portas abertas locais:
+ss -tuln
+
+16) Backups do Termux:
+tar -czf backup_termux.tar.gz ~/storage
+
+17) Criptografar arquivo com gpg:
+pkg install gnupg && gpg -c arquivo.txt
+
+18) Monitorar logs do sistema:
+logcat -d 2>/dev/null | tail -50 || journalctl -n 50
+
+19) Proteger SSH (só sua máquina):
+pkg install openssh && ssh-keygen -t ed25519 && cat ~/.ssh/id_ed25519.pub
+
+20) Dica final: ative 2FA, senhas únicas por conta e nunca rode script de estranho sem ler antes.
+
+============================================================
+ BÔNUS — VERIFICAR VENDEDOR ANTES DE COMPRAR:
+python3 verifica_vendedor.py
+============================================================
