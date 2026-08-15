@@ -15,6 +15,8 @@ Kit de ferramentas legítimas do grupo White Vendas — para vender com seguran�
 
 | `lab_virtual.sh` | Monta laboratório virtual (KVM/VirtualBox) para treinar Kali Linux |
 | `quiz_antiphishing.py` | Quiz educativo para reconhecer golpes de phishing |
+| `check_link.py` | Analisa links e avisa sinais de golpe |
+| `relatorio_denuncia.py` | Gera relatório de denúncia para BO/SaferNet |
 
 ## Instalação
 **Termux (Android):**
@@ -57,3 +59,15 @@ Depois: baixe o Kali Linux (kali.org) e uma VM vulnerável de treino (ex.: Metas
 ```bash
 python3 quiz_antiphishing.py
 ```
+
+
+## Links suspeitos
+```bash
+python3 check_link.py 'https://link-suspeito.com/premio'
+```
+
+## Denúncia
+```bash
+python3 relatorio_denuncia.py
+```
+Gera `relatorio_denuncia.md` com as evidências, para você encaminhar à plataforma, SaferNet ou delegacia. Veja também `guia_golpes.md` e `checklist_seguranca.md`.
