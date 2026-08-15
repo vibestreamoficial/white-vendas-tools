@@ -17,6 +17,7 @@ Kit de ferramentas legítimas do grupo White Vendas — para vender com seguran�
 | `quiz_antiphishing.py` | Quiz educativo para reconhecer golpes de phishing |
 | `check_link.py` | Analisa links e avisa sinais de golpe |
 | `relatorio_denuncia.py` | Gera relatório de denúncia para BO/SaferNet |
+| `cybersec4.py` | Cyber Segurança 4.0: menu com 11 ferramentas de treino |
 
 ## Instalação
 **Termux (Android):**
@@ -71,3 +72,19 @@ python3 check_link.py 'https://link-suspeito.com/premio'
 python3 relatorio_denuncia.py
 ```
 Gera `relatorio_denuncia.md` com as evidências, para você encaminhar à plataforma, SaferNet ou delegacia. Veja também `guia_golpes.md` e `checklist_seguranca.md`.
+
+
+## Cyber Segurança 4.0 🧠
+Kit de treino white hat com menu interativo:
+```bash
+python3 cybersec4.py
+```
+Módulos: quiz de fundamentos, quiz anti-phishing, gerador de senha forte, força de senha, hash de arquivo, cifra de César, scanner educacional, analisador de links, consulta de CNPJ, relatório de denúncia e guia de comandos.
+
+Uso direto:
+```bash
+python3 cybersec4.py senha 16
+python3 cybersec4.py cifra "OLAMUNDO" 3
+python3 cifra_helper.py hash arquivo.py
+python3 cybersec4.py quiz
+```
