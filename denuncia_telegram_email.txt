@@ -1,0 +1,58 @@
+============================================================
+ DENÚNCIA TELEGRAM VIA E-MAIL — anti-golpe (100% legal)
+ Use para denunciar GOLPISTAS, spam, ameaças e conteúdo
+ ilegal recebidos no Telegram.
+ PROIBIDO usar contra pessoas inocentes (isso é crime).
+============================================================
+
+ONDE DENUNCIAR (canais oficiais do Telegram):
+1) DENTRO DO APP (mais rápido):
+   - Abra a conversa > ⋮ > "Report" / "Denunciar".
+   - Escolha o motivo (spam, golpe, violência, etc.).
+2) E-MAIL DE ABUSO: abuse@telegram.org
+3) SUPORTE GERAL / RECUPERAÇÃO: support@telegram.org
+   (se o SEU número foi roubado: recover@telegram.org)
+4) FORMULÁRIO OFICIAL: https://telegram.org/support
+
+------------------------------------------------------------
+ MODELO DE E-MAIL (copie e preencha)
+------------------------------------------------------------
+To: abuse@telegram.org
+Subject: Report: fraud / scam via Telegram account @[username]
+
+Dear Telegram Team,
+
+I am reporting a Telegram user for fraud and abuse.
+
+Username: @[username]
+Phone number (if known): +__ __________
+Chat link / group: [link do grupo/canal, se houver]
+Date of the incident: __/__/____
+
+Description:
+The user contacted me offering [product / investment /
+crypto / prize] and asked for payment of [amount]
+via [PIX / crypto / gift card]. After the payment,
+the user blocked me and deleted the chat.
+
+Evidence:
+- Screenshots of the conversation (attached)
+- Payment receipts (attached)
+
+This account is violating Telegram's Terms of Service.
+Please review and block it.
+
+My Telegram handle (for internal verification): @[seu usuario]
+
+Thank you.
+[Seu nome completo]
+------------------------------------------------------------
+
+DICAS:
+- Sempre anexe prints + comprovantes.
+- Dentro do app use também: Settings > Privacy > Blocked,
+  e reporte o perfil.
+- Golpe com dinheiro: faça BO na delegacia eletrônica e,
+  se foi PIX, acione o MED no banco em até 24h.
+- Denúncia FALSA contra inocente é crime (art. 339 CP).
+============================================================
