@@ -13,6 +13,9 @@ Kit de ferramentas legítimas do grupo White Vendas — para vender com seguran�
 | `senha_check.py` | Checa a força de uma senha |
 | `telegram_topics_bot.py` | Bot do grupo (tópicos, VIP, moderação) — configure `BOT_TOKEN` |
 
+| `lab_virtual.sh` | Monta laboratório virtual (KVM/VirtualBox) para treinar Kali Linux |
+| `quiz_antiphishing.py` | Quiz educativo para reconhecer golpes de phishing |
+
 ## Instalação
 **Termux (Android):**
 ```bash
@@ -42,3 +45,15 @@ Comandos: `/criartopico`, `/vip`, `/resgatar`, `/gerarcodigo`, `/remover`, `/des
 
 ## Regras
 Conteúdo white hat apenas. Nada de phishing, RATs ou acesso a contas de terceiros.
+
+
+## Laboratório virtual
+```bash
+bash lab_virtual.sh
+```
+Depois: baixe o Kali Linux (kali.org) e uma VM vulnerável de treino (ex.: Metasploitable 2) e estude na sua própria rede.
+
+## Anti-phishing
+```bash
+python3 quiz_antiphishing.py
+```
