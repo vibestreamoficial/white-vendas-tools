@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="12dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+        <EditText android:id="@+id/lv_canal" android:hint="Canal (ex.: canal1)"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+        <EditText android:id="@+id/lv_nome" android:hint="Seu nome"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+    </LinearLayout>
+    <org.webrtc.SurfaceViewRenderer
+        android:id="@+id/lv_local" android:layout_width="match_parent"
+        android:layout_height="180dp" android:layout_marginTop="8dp" />
+    <org.webrtc.SurfaceViewRenderer
+        android:id="@+id/lv_remoto" android:layout_width="match_parent"
+        android:layout_height="0dp" android:layout_weight="1" android:layout_marginTop="8dp" />
+    <TextView android:id="@+id/lv_status" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textSize="13sp" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_marginTop="8dp">
+        <Button android:id="@+id/lv_transmitir" android:text="📡 Transmitir"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+        <Button android:id="@+id/lv_assistir" android:text="👁️ Assistir"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+        <Button android:id="@+id/lv_parar" android:text="⏹️ Parar"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

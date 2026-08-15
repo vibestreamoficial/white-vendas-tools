@@ -3,56 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chat White Vendas</title>
+<title>White Chat — perfil, chat e lives</title>
 <style>
-  body { font-family: system-ui, sans-serif; background:#0f172a; color:#e2e8f0; max-width:640px; margin:0 auto; padding:16px; }
-  h1 { color:#fbbf24; font-size:20px; }
-  #msg { background:#1e293b; border:1px solid #334155; border-radius:12px; padding:10px; height:55vh; overflow-y:auto; margin:12px 0; }
-  .m { margin:6px 0; }
-  .u { color:#38bdf8; font-weight:bold; }
-  .t { color:#94a3b8; font-size:12px; }
-  input, button { padding:10px; border-radius:8px; border:1px solid #334155; background:#1e293b; color:#e2e8f0; margin:4px 2px; }
+  body { font-family: system-ui, sans-serif; background:#0f172a; color:#e2e8f0; max-width:760px; margin:0 auto; padding:16px; }
+  h1 { color:#fbbf24; font-size:22px; margin:4px 0; }
+  .tab { display:inline-block; padding:8px 16px; margin:4px 4px 0 0; background:#1e293b; border-radius:10px 10px 0 0; cursor:pointer; border:1px solid #334155; border-bottom:none; }
+  .tab.ativo { background:#fbbf24; color:#0f172a; font-weight:bold; }
+  .painel { background:#1e293b; border:1px solid #334155; border-radius:0 12px 12px 12px; padding:16px; }
+  input, textarea, button { padding:10px; border-radius:8px; border:1px solid #334155; background:#0f172a; color:#e2e8f0; margin:4px 2px; box-sizing:border-box; }
   button { background:#fbbf24; color:#0f172a; font-weight:bold; cursor:pointer; }
+  #msg, #perfilLista { background:#0f172a; border:1px solid #334155; border-radius:12px; padding:10px; height:50vh; overflow-y:auto; margin:10px 0; }
+  .m { margin:6px 0; } .u { color:#38bdf8; font-weight:bold; } .t { color:#94a3b8; font-size:12px; }
+  video { width:100%; max-height:280px; background:#000; border-radius:12px; margin:8px 0; display:none; }
+  .status { font-size:14px; color:#94a3b8; }
+  .vivo { color:#4ade80; font-weight:bold; }
 </style>
 </head>
 <body>
-<h1>💬 Chat White Vendas</h1>
+<h1>💬 White Chat</h1>
 <div>
-  <input id="nome" placeholder="Seu nome" value="Visitante" style="width:40%">
-  <input id="sala" placeholder="Sala (ex.: geral)" value="geral" style="width:40%">
+  <span class="tab ativo" data-p="perfil">Perfil</span>
+  <span class="tab" data-p="chat">Chat</span>
+  <span class="tab" data-p="live">Live</span>
 </div>
-<div id="msg"></div>
-<div>
-  <input id="texto" placeholder="Escreva sua mensagem..." style="width:72%" onkeydown="if(event.key==='Enter')enviar()">
-  <button onclick="enviar()">Enviar</button>
+
+<!-- PERFIL -->
+<div class="painel" id="p-perfil">
+  <h3>👤 Criar / editar perfil</h3>
+  <input id="pf_user" placeholder="Username (ex.: ana)" style="width:45%">
+  <input id="pf_name" placeholder="Nome de exibição" style="width:45%"><br>
+  <textarea id="pf_bio" placeholder="Bio (curta)" rows="2" style="width:92%"></textarea><br>
+  <button onclick="salvarPerfil()">Salvar perfil</button>
+  <button onclick="listarPerfis()">Listar perfis</button>
+  <div id="perfilLista"></div>
 </div>
+
+<!-- CHAT -->
+<div class="painel" id="p-chat" style="display:none">
+  <h3>💬 Chat em tempo real</h3>
+  <input id="ch_user" placeholder="Seu nome" value="Visitante" style="width:35%">
+  <input id="ch_room" placeholder="Sala" value="geral" style="width:35%">
+  <div id="msg"></div>
+  <input id="ch_text" placeholder="Escreva..." style="width:75%" onkeydown="if(event.key==='Enter')enviarMsg()">
+  <button onclick="enviarMsg()">Enviar</button>
+</div>
+
+<!-- LIVE -->
+<div class="painel" id="p-live" style="display:none">
+  <h3>📡 Lives (WebRTC — mesma rede)</h3>
+  <input id="lv_canal" placeholder="Canal da live (ex.: canal1)" value="canal1" style="width:40%">
+  <input id="lv_user" placeholder="Seu nome" value="Visitante" style="width:40%"><br>
+  <button onclick="iniciarLive()">📡 Iniciar live</button>
+  <button onclick="assistir()">👁️ Assistir canal</button>
+  <button onclick="pararLive()">⏹️ Parar / sair</button>
+  <div class="status" id="lv_status">Escolha uma opção. Os controles de câmera aparecem no navegador.</div>
+  <video id="v_local" autoplay muted playsinline></video>
+  <video id="v_remoto" autoplay playsinline></video>
+</div>
+
 <script>
-const msg = document.getElementById('msg');
-let ultimo = 0;
+// ---------- util ----------
 function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
-async function enviar(){
-  const t = document.getElementById('texto').value.trim();
-  if(!t) return;
-  await fetch('/send', {method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({room: sala(), user: nome(), text: t})});
-  document.getElementById('texto').value='';
+function nome(){ return document.getElementById('ch_user').value || document.getElementById('lv_user').value || 'Visitante'; }
+async function post(path, dados){
+  const r = await fetch(path, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(dados)});
+  return r.json();
 }
-function nome(){ return document.getElementById('nome').value || 'Visitante'; }
-function sala(){ return document.getElementById('sala').value || 'geral'; }
-async function atualizar(){
+async function get(path){ const r = await fetch(path); return r.json(); }
+
+// ---------- abas ----------
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('ativo'));
+  t.classList.add('ativo');
+  ['perfil','chat','live'].forEach(p=>document.getElementById('p-'+p).style.display = p===t.dataset.p ? 'block':'none');
+});
+
+// ---------- perfil ----------
+async function salvarPerfil(){
+  const r = await post('/api/profile', {username: pf_user.value.trim(), name: pf_name.value.trim(), bio: pf_bio.value.trim()});
+  document.getElementById('perfilLista').innerHTML = r.ok ? '✅ Perfil salvo.' : '❌ '+r.erro;
+}
+async function listarPerfis(){
+  const r = await get('/api/profiles');
+  const box = document.getElementById('perfilLista');
+  box.innerHTML = '<div class="status">'+(r.perfis||[]).length+' perfil(is)</div>';
+  for (const p of (r.perfis||[])){
+    const d = document.createElement('div'); d.className='m';
+    d.innerHTML = '<span class="u">'+esc(p.name)+'</span> <span class="t">@'+esc(p.username)+'</span><br>'+esc(p.bio||'');
+    box.appendChild(d);
+  }
+}
+
+// ---------- chat ----------
+let ultimoMsg = 0;
+async function enviarMsg(){
+  const t = document.getElementById('ch_text').value.trim(); if(!t) return;
+  await post('/send', {room: document.getElementById('ch_room').value||'geral', user: nome(), text: t});
+  document.getElementById('ch_text').value='';
+}
+async function pollChat(){
+  const room = document.getElementById('ch_room').value||'geral';
+  const r = await get('/messages?room='+encodeURIComponent(room)+'&after='+ultimoMsg).catch(()=>[]);
+  const box = document.getElementById('msg');
+  for (const m of r){
+    const d = document.createElement('div'); d.className='m';
+    d.innerHTML = '<span class="u">'+esc(m.user)+'</span> <span class="t">'+esc(m.ts)+'</span><br>'+esc(m.text);
+    box.appendChild(d); ultimoMsg = Math.max(ultimoMsg, m.id);
+  }
+  box.scrollTop = box.scrollHeight;
+}
+setInterval(pollChat, 1500); pollChat();
+
+// ---------- live (WebRTC mesh) ----------
+const STUN = {iceServers:[{urls:'stun:stun.l.google.com:19302'}]};
+let lvCanal='', meuId=Math.random().toString(36).slice(2,10);
+let souStreamer=false, stream=null, pcA={}, pc=null, depoisSinal=0;
+const vLocal=document.getElementById('v_local'), vRemoto=document.getElementById('v_remoto');
+const statusEl=document.getElementById('lv_status');
+
+async function postSinal(tipo, payload){
+  await post('/api/signal', {room:'live:'+lvCanal, from:nome(), type:tipo, payload});
+}
+async function pollSinal(){
+  if(!lvCanal) return;
+  const lista = await get('/api/signal?room='+encodeURIComponent('live:'+lvCanal)+'&after='+depoisSinal).catch(()=>[]);
+  for (const s of lista){
+    depoisSinal = Math.max(depoisSinal, s.id);
+    tratarSinal(s);
+  }
+}
+setInterval(pollSinal, 1200);
+
+function status(t){ statusEl.innerHTML = t; }
+
+async function iniciarLive(){
+  if(souStreamer){ status('Já está transmitindo.'); return; }
+  lvCanal = document.getElementById('lv_canal').value.trim() || 'canal1';
+  souStreamer = true;
+  status('Solicitando câmera...');
   try{
-    const r = await fetch('/messages?room='+encodeURIComponent(sala())+'&after='+ultimo);
-    const lista = await r.json();
-    for(const m of lista){
-      const d = document.createElement('div'); d.className='m';
-      d.innerHTML = '<span class="u">'+esc(m.user)+'</span> <span class="t">'+esc(m.ts)+'</span><br>'+esc(m.text);
-      msg.appendChild(d); ultimo = Math.max(ultimo, m.id);
-    }
-    msg.scrollTop = msg.scrollHeight;
-  }catch(e){}
+    stream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
+    vLocal.srcObject = stream; vLocal.style.display='block';
+    status('📡 Live <span class="vivo">NO AR</span> no canal '+esc(lvCanal)+'. Compartilhe o canal para assistirem.');
+    await postSinal('live', {on:true, u:nome()});
+  }catch(e){ souStreamer=false; status('❌ Câmera negada: '+e.message); }
 }
-setInterval(atualizar, 1500);
-atualizar();
+
+async function atenderViewer(v){
+  const vp = new RTCPeerConnection(STUN);
+  stream.getTracks().forEach(t=>vp.addTrack(t, stream));
+  const offerId = Math.random().toString(36).slice(2,10);
+  const desc = await vp.createOffer();
+  await vp.setLocalDescription(desc);
+  await new Promise(r=>setTimeout(r, 900)); // coleta de ICE
+  pcA[offerId] = vp;
+  await postSinal('offer', {v, i:offerId, o:btoa(vp.localDescription.sdp)});
+}
+
+async function finalizar(i, o){
+  const vp = pcA[i];
+  if(!vp) return;
+  try{ await vp.setRemoteDescription({type:'answer', sdp:atob(o)}); }
+  catch(e){ status('Erro de conexão: '+e.message); }
+}
+
+async function assistir(){
+  lvCanal = document.getElementById('lv_canal').value.trim() || 'canal1';
+  souStreamer = false;
+  status('Procurando live no canal '+esc(lvCanal)+'...');
+  await postSinal('join', {v:meuId, u:nome()});
+}
+
+async function responder(i, o){
+  try{
+    pc = new RTCPeerConnection(STUN);
+    pc.ontrack = e => { vRemoto.srcObject = e.streams[0]; vRemoto.style.display='block'; };
+    await pc.setRemoteDescription({type:'offer', sdp:atob(o)});
+    const desc = await pc.createAnswer();
+    await pc.setLocalDescription(desc);
+    await new Promise(r=>setTimeout(r, 900));
+    await postSinal('answer', {i, o:btoa(desc.sdp)});
+    status('📺 Conectado à live de '+esc(document.getElementById('lv_user').value));
+  }catch(e){ status('❌ Não foi possível entrar: '+e.message); }
+}
+
+function tratarSinal(s){
+  const t = s.tipo, p = s.payload||{};
+  if(t==='live' && p.on && !souStreamer){ status('📺 Live encontrada no canal! Conectando...'); }
+  if(t==='join' && souStreamer){ atenderViewer(p.v); }
+  if(t==='offer' && !souStreamer && p.v===meuId){ responder(p.i, p.o); }
+  if(t==='answer' && souStreamer){ finalizar(p.i, p.o); }
+  if(t==='stop'){ pararLive(true); }
+}
+
+async function pararLive(porSinal){
+  if(souStreamer && !porSinal){ await postSinal('stop', {}); }
+  souStreamer=false;
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; }
+  Object.values(pcA).forEach(p=>{ try{p.close();}catch(_){} }); pcA={};
+  if(pc){ try{pc.close();}catch(_){} pc=null; }
+  vLocal.srcObject=null; vRemoto.srcObject=null;
+  vLocal.style.display='none'; vRemoto.style.display='none';
+  status('Live encerrada.');
+}
 </script>
 </body>
 </html>
