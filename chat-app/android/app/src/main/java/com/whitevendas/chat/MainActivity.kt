@@ -24,6 +24,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        findViewById<android.widget.Button>(R.id.btn_abrir_tiktok).setOnClickListener {
+            startActivity(Intent(this, WebActivity::class.java))
+        }
         findViewById<android.widget.Button>(R.id.btn_perfil).setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
         }

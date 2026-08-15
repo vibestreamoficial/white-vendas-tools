@@ -11,6 +11,10 @@
     <Button android:id="@+id/btn_salvar_servidor" android:text="💾 Salvar servidor"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginBottom="16dp" />
+    <Button android:id="@+id/btn_abrir_tiktok" android:text="▶ Abrir White Chat TikTok Edition"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:backgroundTint="#FE2C55"
+        android:layout_marginBottom="20dp" />
     <Button android:id="@+id/btn_perfil" android:text="👤 Meu Perfil"
         android:layout_width="match_parent" android:layout_height="wrap_content" />
     <Button android:id="@+id/btn_chat" android:text="💬 Chat"

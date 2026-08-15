@@ -61,6 +61,42 @@ def _carregar():
                 globals()[alvo] = json.load(f)
         except Exception:
             pass
+    if not POSTS:
+        _semear_posts()
+
+
+def _semear_posts():
+    """Cria alguns posts aprovados na primeira execucao para o feed nao nascer vazio."""
+    global POSTS, SEQUENCIA
+    LEGENDAS = [
+        "novo vídeo por aqui! 🔥 #fyp #trend",
+        "isso ficou muito bom 😂 #viral #whitechat",
+        "quem mais ama essa trend? 💃 #dancinha",
+        "nosso momento favorito 🎬 #fyp #edit",
+        "um dia de cada vez ✨ #motivacao",
+        "joga esse beat 🎵 #viral #som",
+    ]
+    POSTS = []
+    for i, u in enumerate(SEED_USERS):
+        POSTS.append({
+            "id": i + 100,
+            "author": u["username"],
+            "autorNome": u["name"],
+            "legenda": LEGENDAS[i % len(LEGENDAS)],
+            "musica": ["som original — " + u["name"], "viral do momento", "mix 2026"][i % 3],
+            "likes": [1200, 8450, 340, 21100, 930, 70][i],
+            "comentarios": [45, 320, 12, 890, 41, 3][i],
+            "compartilhamentos": [12, 89, 3, 240, 9, 0][i],
+            "views": [2300, 9000, 900, 24000, 1500, 200][i],
+            "gradient": GRADS[i % len(GRADS)],
+            "emoji": EMOJIS[i % len(EMOJIS)],
+            "status": "aprovado",
+            "fixado": i == 0,
+            "data": time.strftime("%Y-%m-%d"),
+            "mediaUrl": "",
+        })
+    SEQUENCIA = max(p["id"] for p in POSTS)
+    _salvar("posts.json", POSTS)
 
 
 def _salvar(nome, dados):
